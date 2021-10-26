@@ -1,0 +1,44 @@
+{
+  "name": "@easyvote/api",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./dist/",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "node ./dist/index.js",
+    "build": "run-s build:*",
+    "build:typescript": "tsc -b ./src/tsconfig.json",
+    "watch": "npm-run-all --parallel watch:*",
+    "watch:server": "nodemon -r dotenv/config --inspect=0.0.0.0:9240 ./dist/index.js listen",
+    "watch:typescript": "tsc -b ./src/tsconfig.json --watch",
+    "clean": "shx rm -rf ./dist"
+  },
+  "dependencies": {
+    "@wepublish/api": "2.10.0",
+    "@wepublish/api-db-mongodb": "2.10.0",
+    "@wepublish/api-media-karma": "2.10.0",
+    "axios": "^0.21.1",
+    "commander": "^7.0.0",
+    "html-dom-parser": "^1.0.0",
+    "jsdom": "^16.4.0",
+    "mongodb": "^3.6.4",
+    "pg": "^8.5.1",
+    "pino-multi-stream": "^5.2.0",
+    "pino-sentry": "^0.6.1",
+    "pino-stackdriver": "^2.1.1",
+    "slate": "^0.59.0",
+    "slate-hyperscript": "^0.59.0"
+  },
+  "devDependencies": {
+    "@types/jsdom": "^16.2.6",
+    "@types/mongodb": "^3.6.6",
+    "@types/node": "^12.6.8",
+    "@types/pg": "^7.14.10",
+    "@types/pino-multi-stream": "^5.1.0",
+    "dotenv": "^8.2.0",
+    "nodemon": "^1.19.4",
+    "npm-run-all": "^4.1.5",
+    "shx": "^0.3.2",
+    "typescript": "^4.0.2"
+  }
+}

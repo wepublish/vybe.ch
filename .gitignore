@@ -1,0 +1,16 @@
+.DS_Store
+.idea/
+lib/
+dist/
+assets/
+node_modules
+npm-debug.log
+yarn-error.log
+.tsbuildinfo
+spikes/
+.history/
+temp/
+.media/
+.storybookbuild/
+.env
+migration_data

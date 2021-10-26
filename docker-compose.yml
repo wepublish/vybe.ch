@@ -1,0 +1,66 @@
+version: '3.7'
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    depends_on:
+      - media
+      - mongo
+    ports:
+      - "4000:4000"
+    environment:
+      - MEDIA_SERVER_URL=http://localhost:4001
+      - MEDIA_SERVER_TOKEN=secret
+      - HOST_URL=http://localhost:4000
+      - MONGO_URL=mongodb://mongo:27017/easyvote
+      - WEBSITE_URL=http://localhost:5000
+      - NODE_ENV=production
+      - GOOGLE_PROJECT=easyvote-ch
+      - SENTRY_DSN=https://b1e3a5e615d64cbe82662f8f3223a212@o462715.ingest.sentry.io/5881190
+    network_mode: host
+
+  media:
+    build:
+      context: ./media
+      dockerfile: Dockerfile
+    ports:
+      - "4001:4001"
+    environment:
+      - STORAGE_PATH=./media
+      - TOKEN=secret
+      - NUM_CLUSTERS=1
+    network_mode: host
+
+  editor:
+    build:
+      context: ./editor
+      dockerfile: Dockerfile
+    depends_on:
+      - api
+    ports:
+      - "3000:3000"
+    environment:
+      - API_URL=http://localhost:4000
+    network_mode: host
+
+#  website:
+#    build:
+#      context: ./website
+#      dockerfile: Dockerfile
+#    depends_on:
+#      - api
+#      - media
+#    ports:
+#      - "5000:5000"
+#    environment:
+#      - NODE_ENV=production
+#      - API_URL=http://0.0.0.0:4000
+#      - CANONICAL_HOST=http://localhost:5000
+#      - ALLOWED_HOSTS=localhost
+#    network_mode: host
+
+  mongo:
+    image: mongo:4.2.3-bionic
+    ports:
+      - 27020:27017

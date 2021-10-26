@@ -1,0 +1,94 @@
+image: docker:latest
+
+# Pick zero or more services to be used on all builds.
+# Only needed when using a docker container to run your tests in.
+# Check out: http://docs.gitlab.com/ce/ci/docker/using_docker_images.html#what-is-a-service
+services:
+  - docker:dind
+
+
+
+# This folder is cached between builds
+# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+cache:
+  paths:
+    - node_modules/
+
+
+stages:
+  - pre-build
+  - build
+  - deploy
+  #- review
+  #- dast
+  #- staging
+  #- canary
+  #- production
+  #- performance
+  #- cleanup
+
+
+pre-build:
+  stage: pre-build
+  image: nikolaik/python-nodejs:python3.7-nodejs12
+  script:
+    - yarn install
+    - yarn run lint
+    - yarn build
+    - node ./create-gke-manifest.js
+  artifacts:
+    paths:
+      - api/dist
+      - media/dist
+      - website/.next
+      - kubernetesConfigs
+  only:
+    - main
+
+build:
+  stage: build
+  dependencies:
+    - pre-build
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker build --pull -t "$CI_REGISTRY_IMAGE/api:$CI_COMMIT_SHORT_SHA" ./api
+    - docker push "$CI_REGISTRY_IMAGE/api:$CI_COMMIT_SHORT_SHA"
+    - docker build --pull -t "$CI_REGISTRY_IMAGE/editor:$CI_COMMIT_SHORT_SHA" ./editor
+    - docker push "$CI_REGISTRY_IMAGE/editor:$CI_COMMIT_SHORT_SHA"
+    - docker build --pull -t "$CI_REGISTRY_IMAGE/media:$CI_COMMIT_SHORT_SHA" ./media
+    - docker push "$CI_REGISTRY_IMAGE/media:$CI_COMMIT_SHORT_SHA"
+    - docker build --pull -t "$CI_REGISTRY_IMAGE/website:$CI_COMMIT_SHORT_SHA" ./website
+    - docker push "$CI_REGISTRY_IMAGE/website:$CI_COMMIT_SHORT_SHA"
+  only:
+    - main
+
+
+.delpoy: &deploy_template
+  stage: deploy
+  image: google/cloud-sdk:latest
+  dependencies:
+    - pre-build
+  script:
+    - echo $GCLOUD_SERVICE_KEY | base64 -d > gcloud-service-key.json
+    - gcloud auth activate-service-account --key-file gcloud-service-key.json
+    - kubectl apply -f ./kubernetesConfigs --kubeconfig $KUBECONFIG
+
+
+deploy_staging:
+  <<: *deploy_template
+  environment:
+    name: staging
+    url: https://new.tsri.dev
+  only:
+    - main
+
+#deploy_prod:
+#  <<: *deploy_template
+#  environment:
+#    name: production
+#    url: https://tsri.ch
+#  when: manual
+#  variables:
+#    TARGET: "production"
+#  only:
+#    - tags
