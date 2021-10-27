@@ -136,7 +136,7 @@ async function applyWebsite() {
       tls: [
         {
           hosts: hosts,
-          secretName: `${appName}-tls`
+          secretName: `${appName}-vybe-tls`
         }
       ]
     }
@@ -461,7 +461,7 @@ async function applyMediaServer() {
       tls: [
         {
           hosts: [domainMedia],
-          secretName: `${appName}-tls`
+          secretName: `${appName}-vybe-tls`
         }
       ]
     }
@@ -698,7 +698,7 @@ async function applyApiServer() {
       tls: [
         {
           hosts: [domainAPI],
-          secretName: `${appName}-tls`
+          secretName: `${appName}-vybe-tls`
         }
       ]
     }
@@ -854,7 +854,7 @@ async function applyEditor() {
       tls: [
         {
           hosts: [domainEditor],
-          secretName: `${appName}-tls`
+          secretName: `${appName}-vybe-tls`
         }
       ]
     }
@@ -1070,7 +1070,7 @@ async function applyOAuth2() {
       tls: [
         {
           hosts: [domainOauth],
-          secretName: `${appName}-tls`
+          secretName: `${appName}-vybe-tls`
         }
       ]
     }
