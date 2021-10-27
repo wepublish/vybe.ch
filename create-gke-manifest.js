@@ -10,10 +10,10 @@ let ENVIRONMENT_NAME = 'development'
 if (GITHUB_REF === 'refs/heads/main' || GITHUB_REF === 'main') {
   ENVIRONMENT_NAME = 'production'
 }
-const NAMESPACE = envSwitch(ENVIRONMENT_NAME,'easyvote', 'easyvote-dev')
+const NAMESPACE = envSwitch(ENVIRONMENT_NAME,'vybe', 'vybe-dev')
 
-const domain = 'content.easyvote.ch'
-const devDomain = 'content.easyvote.dev'
+const domain = 'vybe.ch'
+const devDomain = 'vybe.dev'
 const domainCn = envSwitch(ENVIRONMENT_NAME, `${domain}`, `${devDomain}`)
 const domainSan = envSwitch(
   ENVIRONMENT_NAME,
@@ -281,7 +281,7 @@ async function applyMediaServer() {
     apiVersion: 'v1',
     kind: 'PersistentVolumeClaim',
     metadata: {
-      name: 'easyvote-media',
+      name: 'vybe-media',
       namespace: NAMESPACE
     },
     spec: {
@@ -348,7 +348,7 @@ async function applyMediaServer() {
                   name: 'TOKEN',
                   valueFrom: {
                     secretKeyRef: {
-                      name: 'easyvote-secrets',
+                      name: 'vybe-secrets',
                       key: 'media_server_token'
                     }
                   }
@@ -388,7 +388,7 @@ async function applyMediaServer() {
             {
               name: 'media-volume',
               persistentVolumeClaim: {
-                claimName: 'easyvote-media'
+                claimName: 'vybe-media'
               }
             }
           ]
@@ -552,8 +552,8 @@ async function applyApiServer() {
                   name: 'MONGO_URL',
                   value: envSwitch(
                     ENVIRONMENT_NAME,
-                    'mongodb://mongo-production:27017/easyvote',
-                    'mongodb://mongo-development:27017/easyvote'
+                    'mongodb://mongo-production:27017/vybe',
+                    'mongodb://mongo-development:27017/vybe'
                   )
                 },
                 {
@@ -577,7 +577,7 @@ async function applyApiServer() {
                   name: 'MEDIA_SERVER_TOKEN',
                   valueFrom: {
                     secretKeyRef: {
-                      name: 'easyvote-secrets',
+                      name: 'vybe-secrets',
                       key: 'media_server_token'
                     }
                   }
@@ -586,7 +586,7 @@ async function applyApiServer() {
                   name: 'JWT_SECRET_KEY',
                   valueFrom: {
                     secretKeyRef: {
-                      name: 'easyvote-secrets',
+                      name: 'vybe-secrets',
                       key: 'jwt_secret_key'
                     }
                   }
@@ -594,7 +594,7 @@ async function applyApiServer() {
                   name: 'SENTRY_DSN',
                   valueFrom: {
                     secretKeyRef: {
-                      name: 'easyvote-secrets',
+                      name: 'vybe-secrets',
                       key: 'sentry_dsn'
                     }
                   }
@@ -606,7 +606,7 @@ async function applyApiServer() {
                   name: 'GOOGLE_PROJECT',
                   valueFrom: {
                     secretKeyRef: {
-                      name: 'easyvote-secrets',
+                      name: 'vybe-secrets',
                       key: 'google_project'
                     }
                   }

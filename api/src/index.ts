@@ -22,8 +22,8 @@ interface EasyvoteURLAdapterProps {
   readonly websiteURL: string
 }
 
-// TODO: fix the URLs
-class EasyvoteURLAdapter implements URLAdapter {
+
+class VybeURLAdapter implements URLAdapter {
 
   readonly websiteURL: string
 
@@ -40,7 +40,7 @@ class EasyvoteURLAdapter implements URLAdapter {
   }
 
   getAuthorURL(author: Author): string {
-    return `https://www.easyvote.ch/de/f/ueber-uns/team`
+    return `https://vybe.ch/ueber-uns/`
   }
 
   getArticlePreviewURL(token: string): string {
@@ -91,7 +91,7 @@ async function asyncMain() {
 
       await adapter.user.createUser({
         input: {
-          email: 'admin@easyvote.ch',
+          email: 'admin@vybe.ch',
           name: 'Admin',
           emailVerifiedAt: null,
           roleIDs: [adminUserRoleId],
@@ -153,7 +153,7 @@ async function asyncMain() {
     mailProvider: undefined,
     oauth2Providers: [],
     logger,
-    urlAdapter: new EasyvoteURLAdapter({websiteURL}),
+    urlAdapter: new VybeURLAdapter({websiteURL}),
     playground: false,
     introspection: true,
     tracing: true

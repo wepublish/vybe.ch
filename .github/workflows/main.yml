@@ -1,49 +1,49 @@
-#name: CI/CD
-#
-#on:
-#  push:
-#    branches:
-#      - main
-#
-#jobs:
-#  release:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v1
-#        name: checkout repository
-#      - uses: actions/setup-node@v1
-#        with:
-#          node-version: '12.x'
-#      - name: Build docker
-#        env:
-#          PROJECT_ID: easyvote-ch
-#          GCLOUD_AUTH: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_EASYVOTE }}
-#        run: |
-#          yarn install
-#          yarn build
-#          # https://cloud.google.com/container-registry/docs/advanced-authentication
-#          printenv GCLOUD_AUTH | base64 --decode | docker login -u _json_key --password-stdin https://eu.gcr.io
-#          docker build --pull -t eu.gcr.io/${PROJECT_ID}/${GITHUB_REPOSITORY}/api:${GITHUB_SHA} ./api
-#          docker push eu.gcr.io/${PROJECT_ID}/${GITHUB_REPOSITORY}/api:${GITHUB_SHA}
-#          docker build --pull -t eu.gcr.io/${PROJECT_ID}/${GITHUB_REPOSITORY}/editor:${GITHUB_SHA} ./editor
-#          docker push eu.gcr.io/${PROJECT_ID}/${GITHUB_REPOSITORY}/editor:${GITHUB_SHA}
-#          docker build --pull -t eu.gcr.io/${PROJECT_ID}/${GITHUB_REPOSITORY}/media:${GITHUB_SHA} ./media
-#          docker push eu.gcr.io/${PROJECT_ID}/${GITHUB_REPOSITORY}/media:${GITHUB_SHA}
-#      - uses: actions/setup-node@v1
-#        with:
-#          node-version: '10.x'
-#      - name: Create manifest
-#        env:
-#          PROJECT_ID: easyvote-ch
-#        run: |
-#          node ./create-gke-manifest.js
-#          ls -al ./kubernetesConfigs
-#      - name: Prepare and authenticate kubectl
-#        uses: google-github-actions/get-gke-credentials@main
-#        with:
-#          cluster_name: funiciello-dev-cluster
-#          location: europe-west6
-#          project_id: wepublish-dev
-#          credentials: ${{ secrets.GCP_SA_KEY_WEP_DEV }}
-#      - name: Deploy to kubernetes
-#        run: kubectl apply -f ./kubernetesConfigs
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        name: checkout repository
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: Build docker
+        env:
+          PROJECT_ID: vybe-ch
+          GCLOUD_AUTH: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_VYBE }}
+        run: |
+          yarn install
+          yarn build
+          # https://cloud.google.com/container-registry/docs/advanced-authentication
+          printenv GCLOUD_AUTH | base64 --decode | docker login -u _json_key --password-stdin https://eu.gcr.io
+          docker build --pull -t eu.gcr.io/${PROJECT_ID}/${GITHUB_REPOSITORY}/api:${GITHUB_SHA} ./api
+          docker push eu.gcr.io/${PROJECT_ID}/${GITHUB_REPOSITORY}/api:${GITHUB_SHA}
+          docker build --pull -t eu.gcr.io/${PROJECT_ID}/${GITHUB_REPOSITORY}/editor:${GITHUB_SHA} ./editor
+          docker push eu.gcr.io/${PROJECT_ID}/${GITHUB_REPOSITORY}/editor:${GITHUB_SHA}
+          docker build --pull -t eu.gcr.io/${PROJECT_ID}/${GITHUB_REPOSITORY}/media:${GITHUB_SHA} ./media
+          docker push eu.gcr.io/${PROJECT_ID}/${GITHUB_REPOSITORY}/media:${GITHUB_SHA}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - name: Create manifest
+        env:
+          PROJECT_ID: vybe-ch
+        run: |
+          node ./create-gke-manifest.js
+          ls -al ./kubernetesConfigs
+      - name: Prepare and authenticate kubectl
+        uses: google-github-actions/get-gke-credentials@main
+        with:
+          cluster_name: funiciello-dev-cluster
+          location: europe-west6
+          project_id: wepublish-dev
+          credentials: ${{ secrets.GCP_SA_KEY_WEP_DEV }}
+      - name: Deploy to kubernetes
+        run: kubectl apply -f ./kubernetesConfigs
