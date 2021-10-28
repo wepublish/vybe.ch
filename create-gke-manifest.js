@@ -12,7 +12,7 @@ if (GITHUB_REF === 'refs/heads/main' || GITHUB_REF === 'main') {
 }
 const NAMESPACE = envSwitch(ENVIRONMENT_NAME,'vybe', 'vybe-dev')
 
-const domain = 'vybe.wepublish.dev'
+const domain = 'vybe.ch'
 const devDomain = 'vybe.dev'
 const domainCn = envSwitch(ENVIRONMENT_NAME, `${domain}`, `${devDomain}`)
 const domainSan = envSwitch(
