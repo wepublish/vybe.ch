@@ -32,7 +32,7 @@ class VybeURLAdapter implements URLAdapter {
   }
 
   getPublicArticleURL(article: PublicArticle): string {
-    return `${this.websiteURL}/${article.slug}`
+    return article.canonicalUrl ?? 'https://vybe.ch'
   }
 
   getPublicPageURL(page: PublicPage): string {
