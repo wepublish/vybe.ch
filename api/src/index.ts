@@ -32,7 +32,7 @@ class VybeURLAdapter implements URLAdapter {
   }
 
   getPublicArticleURL(article: PublicArticle): string {
-    return `${this.websiteURL}/a/${article.id}/${article.slug}`
+    return `${this.websiteURL}/${article.slug}`
   }
 
   getPublicPageURL(page: PublicPage): string {
