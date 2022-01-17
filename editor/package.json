@@ -8,7 +8,7 @@
     "start": "wepublish-editor"
   },
   "dependencies": {
-    "@wepublish/editor": "2.13.0-alpha.0",
+    "@wepublish/editor": "2.15.0",
     "webpack": "^4.41.2"
   },
   "devDependencies": {

@@ -18,7 +18,7 @@ import pinoMultiStream from 'pino-multi-stream'
 import pinoStackdriver from 'pino-stackdriver'
 import {createWriteStream} from 'pino-sentry'
 
-interface EasyvoteURLAdapterProps {
+interface VybeURLAdapterProps {
   readonly websiteURL: string
 }
 
@@ -27,7 +27,7 @@ class VybeURLAdapter implements URLAdapter {
 
   readonly websiteURL: string
 
-  constructor(props: EasyvoteURLAdapterProps) {
+  constructor(props: VybeURLAdapterProps) {
     this.websiteURL = props.websiteURL
   }
 
@@ -56,6 +56,10 @@ class VybeURLAdapter implements URLAdapter {
   }
 
   getPeeredArticleURL(peer: Peer, article: PublicArticle): string {
+    return ''
+  }
+
+  getLoginURL(token: string): string {
     return ''
   }
 

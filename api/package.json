@@ -14,9 +14,9 @@
     "clean": "shx rm -rf ./dist"
   },
   "dependencies": {
-    "@wepublish/api": "2.13.0-alpha.0",
-    "@wepublish/api-db-mongodb": "2.13.0-alpha.0",
-    "@wepublish/api-media-karma": "2.13.0-alpha.0",
+    "@wepublish/api": "2.15.0",
+    "@wepublish/api-db-mongodb": "2.15.0",
+    "@wepublish/api-media-karma": "2.15.0",
     "axios": "^0.21.1",
     "commander": "^7.0.0",
     "html-dom-parser": "^1.0.0",
