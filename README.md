@@ -29,3 +29,12 @@ The following servers will be available:
 - **Editor:** [http://localhost:3000](http://localhost:3000)
 - **Editor:** [http://localhost:3000](http://localhost:3000)
 - **Media Server** [http://localhost:3004](http://localhost:3004)
+
+
+### Bump to new WEP version
+
+1) Change version of packages ```@wepublish/api```, ```@wepublish/api-db-mongodb``` and ```@wepublish/api-media-karma``` in ```api/package.json``` to mew WEP version.
+2) Change version of packages ```@wepublish/editor``` in ```editor/package.json``` to mew WEP version.
+3) Run in root  ```yarn install```
+4) If necessary fix ```api/src/index.ts``` until ```yarn build``` command works again
+5) Push to main for deployment
