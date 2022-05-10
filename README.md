@@ -12,18 +12,20 @@
 If you're setting up the project for the first time:
 
 ```
-yarn install && yarn build
+yarn install && yarn build && yarn setup
 ```
 
-After that you can watch the project via:
+After that you can watch the project via (in two different shells):
 
 ```
+docker-compose up mongo 
 yarn watch
 ```
 
 
 The following servers will be available:
 
-- **Website:** [http://localhost:5000](http://localhost:5000)
 - **Wepublish API:** [http://localhost:4000](http://localhost:4000)
 - **Editor:** [http://localhost:3000](http://localhost:3000)
+- **Editor:** [http://localhost:3000](http://localhost:3000)
+- **Media Server** [http://localhost:3004](http://localhost:3004)

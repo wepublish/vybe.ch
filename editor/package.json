@@ -5,7 +5,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "watch": "node -r dotenv/config node_modules/.bin/wepublish-editor",
-    "start": "wepublish-editor"
+    "start": "wepublish-editor",
+    "setup": "cp .env_example .env"
   },
   "dependencies": {
     "@wepublish/editor": "2.15.0",
