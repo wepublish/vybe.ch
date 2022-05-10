@@ -15,9 +15,9 @@
     "setup": "cp .env_example .env"
   },
   "dependencies": {
-    "@wepublish/api": "2.15.0",
-    "@wepublish/api-db-mongodb": "2.15.0",
-    "@wepublish/api-media-karma": "2.15.0",
+    "@wepublish/api": "^3.0.0",
+    "@wepublish/api-db-mongodb": "^3.0.0",
+    "@wepublish/api-media-karma": "^3.0.0",
     "axios": "^0.21.1",
     "commander": "^7.0.0",
     "html-dom-parser": "^1.0.0",

@@ -9,7 +9,7 @@
     "setup": "cp .env_example .env"
   },
   "dependencies": {
-    "@wepublish/editor": "2.15.0",
+    "@wepublish/editor": "^3.0.0",
     "webpack": "^4.41.2"
   },
   "devDependencies": {

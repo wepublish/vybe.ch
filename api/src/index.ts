@@ -4,7 +4,7 @@ import {
   URLAdapter,
   PublicArticle,
   PublicPage,
-  Author, PublicComment, Peer
+  Author, PublicComment, Peer, AlgebraicCaptchaChallenge
 } from '@wepublish/api'
 
 
@@ -144,6 +144,9 @@ async function asyncMain() {
     level: 'info'
   })
 
+  // Added dummy captcha adapter
+  const challenge = new AlgebraicCaptchaChallenge("secret",2,{})
+
   const server = new WepublishServer({
     hostURL,
     websiteURL,
@@ -160,7 +163,8 @@ async function asyncMain() {
     urlAdapter: new VybeURLAdapter({websiteURL}),
     playground: false,
     introspection: true,
-    tracing: true
+    tracing: true,
+    challenge
   })
 
   program.version('0.0.1')
